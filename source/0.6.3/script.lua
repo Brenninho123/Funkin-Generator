@@ -1,2 +1,2 @@
 function onCreate()
-eneneneneneenneenneen
+end
