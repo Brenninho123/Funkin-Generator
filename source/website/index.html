@@ -100,7 +100,7 @@ footer {
   <h1>FNF Psych Engine</h1>
   <p>Gerador de Scripts em Lua</p>
 </header><main><section>
-  <h2>Configurações do Script</h2><label>Tipo de Script</label> <select id="tipo"> <option value="modchart">Modchart</option> <option value="hud">HUD</option> <option value="event">Evento</option> </select>
+  <h2>Configurações do Script</h2><label>Tipo de Script</label> <select id="tipo"> <option value="modchart">Modchart</option> <option value="hud">HUD</option> <option value="event">Evento</option> <option value="camera">Camera Follow</option> <option value="notesplash">Note Splash</option> <option value="customnote">Custom Note</option> <option value="stage">Stage</option> <option value="ui">UI / Menu</option> <option value="gameover">Game Over</option> <option value="achievement">Achievement</option> <option value="shader">Shader (Lua)</option> <option value="empty">Script vazio</option> </select>
 
 <label>Nome do Script</label> <input id="nome" placeholder="ex: cameraZoom.lua" />
 
@@ -118,31 +118,42 @@ footer {
 function gerar() {
   const tipo = document.getElementById('tipo').value;
   const vel = document.getElementById('vel').value;
-
   let lua = '';
 
+  if (tipo === 'empty') {
+    lua = `-- SCRIPT LUA VAZIO (Psych Engine)
+function onCreate()
+end
+
+function onUpdate(elapsed)
+end
+
+function onBeatHit()
+end`;
+  }
+
   if (tipo === 'modchart') {
-    lua = `-- MODCHART (Psych Engine)
+    lua = `-- MODCHART
 function onBeatHit()
   if curBeat % 4 == 0 then
-    doTweenZoom('zoom','camGame',getProperty('camGame.zoom')+0.1,${vel},'quadOut')
+    doTweenAngle('turn','camGame',2,${vel},'sineInOut')
   end
 end`;
   }
 
   if (tipo === 'hud') {
-    lua = `-- HUD CUSTOM
+    lua = `-- HUD
 function onCreatePost()
-  setTextSize('scoreTxt',22)
-  setProperty('healthBar.alpha',0.8)
+  setTextFont('scoreTxt','vcr.ttf')
+  setProperty('healthBar.alpha',0.7)
 end`;
   }
 
   if (tipo === 'event') {
-    lua = `-- EVENTO CUSTOM
+    lua = `-- EVENTO
 function onEvent(name,v1,v2)
-  if name == 'Screen Shake' then
-    cameraShake('camGame',0.01,tonumber(v1) or 0.2)
+  if name == 'Flash' then
+    cameraFlash('camGame','FFFFFF',tonumber(v1) or 0.5)
   end
 end`;
   }
@@ -159,7 +170,7 @@ end`;
   }
 
   if (tipo === 'notesplash') {
-    lua = `-- NOTE SPLASH CUSTOM
+    lua = `-- NOTE SPLASH
 function goodNoteHit(id,dir,noteType,isSustain)
   if not isSustain then
     spawnNoteSplashOnNote(id)
@@ -169,20 +180,47 @@ end`;
 
   if (tipo === 'customnote') {
     lua = `-- CUSTOM NOTE
-function onCreate()
-  addLuaScript('custom_note')
-end
-
 function goodNoteHit(id,dir,noteType,isSustain)
-  if noteType == 'Poison Note' then
-    setProperty('health',getProperty('health')-0.2)
+  if noteType == 'Damage Note' then
+    setProperty('health',getProperty('health')-0.3)
   end
+end`;
+  }
+
+  if (tipo === 'stage') {
+    lua = `-- STAGE SCRIPT
+function onCreate()
+  makeLuaSprite('bg','stage/bg',-600,-200)
+  addLuaSprite('bg',false)
+end`;
+  }
+
+  if (tipo === 'ui') {
+    lua = `-- UI / MENU
+function onCreatePost()
+  setPropertyFromClass('ClientPrefs','downScroll',true)
+end`;
+  }
+
+  if (tipo === 'gameover') {
+    lua = `-- GAME OVER
+function onGameOver()
+  playSound('death',1)
+  return Function_Continue
+end`;
+  }
+
+  if (tipo === 'achievement') {
+    lua = `-- ACHIEVEMENT
+function onEndSong()
+  unlockAchievement('my_achievement')
+  return Function_Continue
 end`;
   }
 
   if (tipo === 'shader') {
     lua = `-- SHADER FAKE (LUA)
-function onCreatePost()
+function onUpdate(elapsed)
   setProperty('camGame.alpha',0.95)
 end`;
   }
