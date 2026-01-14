@@ -5,12 +5,33 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist-win": "electron-builder --win --x64"
+    "dist-win": "electron-builder --win --x64 --ia32",
+    "dist-all": "electron-builder"
   },
   "author": "Seu Nome",
   "license": "MIT",
   "devDependencies": {
     "electron": "^26.0.0",
     "electron-builder": "^24.6.0"
+  },
+  "build": {
+    "appId": "com.seunome.fnfultimatetoolkit",
+    "productName": "FNF Ultimate Toolkit",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }
