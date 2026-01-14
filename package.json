@@ -1,11 +1,16 @@
-"scripts": {
-  "dist-win": "electron-builder --win nsis"
-},
-"build": {
-  "appId": "com.fnf.toolkit",
-  "productName": "FNF Ultimate Toolkit",
-  "directories": { "output": "dist" },
-  "publish": null,
-  "files": ["**/*"],
-  "win": { "target": "nsis", "icon": "assets/icon.ico" }
+{
+  "name": "fnf-ultimate-toolkit",
+  "version": "1.0.0",
+  "description": "Friday Night Funkin' Ultimate Toolkit",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist-win": "electron-builder --win --x64"
+  },
+  "author": "Seu Nome",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^26.0.0",
+    "electron-builder": "^24.6.0"
+  }
 }
