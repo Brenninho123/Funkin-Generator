@@ -1,9 +1,9 @@
-name: Build Windows Only
+name: Build Windows
 
 on:
   push:
     tags:
-      - 'v*'  # builda quando você criar uma tag, ex: v1.0.0
+      - 'v*'
 
 jobs:
   build:
@@ -29,3 +29,22 @@ jobs:
         with:
           name: windows-build
           path: dist/*.exe
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Windows artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-build
+          path: dist/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: FNF Ultimate Toolkit ${{ github.ref_name }}
+          files: dist/*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
