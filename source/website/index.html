@@ -3,130 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Funkin' Lua Template</title>
+<title>FNF Ultimate Toolkit</title>
 
 <style>
-/* ===================== SEU CSS ORIGINAL ===================== */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  color:#fff;
-  min-height:100vh;
-}
-
-header{
-  padding:20px;
-  background:rgba(0,0,0,.4);
-  text-align:center;
-}
-
-header h1{font-size:2.2rem}
-
-nav a{
-  color:#00eaff;
-  text-decoration:none;
-  margin:0 10px;
-  font-weight:bold;
-}
-
-main{
-  padding:40px 20px;
-  max-width:1100px;
-  margin:auto;
-}
-
-section{
-  margin-bottom:40px;
-  background:rgba(255,255,255,.08);
-  padding:20px;
-  border-radius:12px;
-}
-
-section h2{color:#00eaff;margin-bottom:10px}
-
-button{
-  background:#00eaff;
-  border:none;
-  padding:10px 18px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-textarea,select,input{
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  border:none;
-  margin-top:10px;
-}
-
-footer{
-  text-align:center;
-  padding:15px;
-  background:rgba(0,0,0,.5);
-}
-
-/* ===================== INTRO ADICIONAL (SEU) ===================== */
-#introScreen{
-  position:fixed;
-  inset:0;
-  background:linear-gradient(135deg,#050d12,#0f2027,#203a43);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-  transition:.6s;
-}
-
-#introBox{
-  background:rgba(0,0,0,.6);
-  padding:40px;
-  border-radius:20px;
-  text-align:center;
-  box-shadow:0 0 40px rgba(0,234,255,.3);
-}
-
-#introBox h1{color:#00eaff}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{background:linear-gradient(135deg,#050d12,#0f2027,#203a43);color:#fff;min-height:100vh}
+header{padding:20px;background:rgba(0,0,0,.5);text-align:center}
+header h1{color:#00eaff;font-size:2.2rem}
+nav a{color:#00eaff;text-decoration:none;margin:0 10px;font-weight:bold}
+main{max-width:1200px;margin:auto;padding:30px}
+section{background:rgba(255,255,255,.08);padding:20px;border-radius:14px;margin-bottom:30px}
+h2{color:#00ffa5;margin-bottom:10px}
+textarea,select,input{width:100%;padding:10px;border-radius:8px;border:none;margin-top:10px}
+button{background:#00ffa5;color:#000;border:none;padding:10px 18px;border-radius:8px;font-weight:bold;cursor:pointer;margin-top:10px}
+pre{background:#111;padding:15px;border-radius:10px;overflow:auto;max-height:300px}
+footer{text-align:center;padding:15px;background:rgba(0,0,0,.6)}
+#introScreen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+background:linear-gradient(135deg,#050d12,#0f2027,#203a43);z-index:9999}
+#introBox{background:rgba(0,0,0,.7);padding:40px;border-radius:20px;text-align:center}
 </style>
 </head>
 
 <body>
 
-<!-- ===================== INTRO (SEU) ===================== -->
 <div id="introScreen">
   <div id="introBox">
-    <h1>FNF Script Generator</h1>
+    <h1>FNF Ultimate Toolkit</h1>
     <p>Psych • Codename • V-Slice<br>Lua • Haxe • HScript</p>
     <button onclick="enterSite()">Entrar</button>
   </div>
 </div>
 
 <header>
-<h1>Funkin' Script Modding</h1>
+<h1>Friday Night Funkin' – Toolkit Definitivo</h1>
 <nav>
-<a href="#inicio">Início</a>
-<a href="#gerador">Gerador</a>
-<a href="#converter">Converter</a>
-<a href="#extras">Extras</a>
+<a href="#generator">Gerador</a>
+<a href="#chart">Chart</a>
+<a href="#stage">Stage</a>
 </nav>
 </header>
 
 <main>
 
-<section id="inicio">
-<h2>Bem-vindo</h2>
-<p>Gerador avançado de scripts para Friday Night Funkin'.</p>
-</section>
-
-<section id="gerador">
-<h2>Gerar Script</h2>
+<!-- ================= GERADOR ================= -->
+<section id="generator">
+<h2>🎮 Gerador de Scripts</h2>
 
 <select id="engine">
 <option>Psych Engine (Lua)</option>
@@ -136,161 +57,123 @@ footer{
 
 <select id="scriptType">
 <option>Camera Zoom</option>
-<option>HUD Custom</option>
-<option>Note Special</option>
-<option>Health System</option>
-<option>Stage JSON</option>
+<option>Camera Follow</option>
+<option>Custom Event</option>
+<option>Note Splash Toggle</option>
+<option>Middle Scroll Toggle</option>
+<option>Beat Animation</option>
+<option>Custom HUD (Haxe)</option>
+<option>Note Modifier (Haxe)</option>
+<option>Camera Script (Haxe)</option>
+<option>Character Script (Haxe)</option>
+<option>Health Drain (Haxe)</option>
 </select>
 
-<button onclick="generate()">Gerar Script</button>
-
+<button onclick="generate()">Gerar</button>
 <textarea id="output" rows="14"></textarea>
-
-<!-- ===================== ADICIONADO ===================== -->
 <button onclick="copyOut()">Copiar</button>
 <button onclick="downloadOut()">Baixar</button>
-
-<input type="file" id="importFile" accept=".lua,.hx,.json,.hscript">
-<button onclick="importFile()">Importar Script</button>
-
 </section>
 
-<section id="converter">
-<h2>Converter Scripts</h2>
-<select id="convertType">
-<option>Psych → Codename</option>
-<option>Codename → Psych</option>
-</select>
-<textarea id="inputScript" rows="8" placeholder="Cole o script aqui"></textarea>
-<button onclick="convert()">Converter</button>
-<textarea id="converted" rows="10"></textarea>
+<!-- ================= CHART ================= -->
+<section id="chart">
+<h2>🎵 Psych Chart → VSlice</h2>
+<input type="file" id="chartInput" accept=".json">
+<button onclick="downloadChart()">Baixar Chart</button>
+<pre id="chartOutput"></pre>
 </section>
 
-<section id="extras">
-<h2>Extras (Codename / HScript)</h2>
-<p>Compatível conceitualmente com:</p>
-<ul>
-<li>CodenameEngine</li>
-<li>hscript-improved</li>
-<li>hscript-rewrite</li>
-</ul>
+<!-- ================= STAGE ================= -->
+<section id="stage">
+<h2>🎭 Psych Stage → VSlice</h2>
+<input type="file" id="stageJson" accept=".json">
+<input type="file" id="stageLua" accept=".lua">
+<button onclick="convertStage()">Converter Stage</button>
+<pre id="stageOutput"></pre>
 </section>
 
 </main>
 
-<footer>© 2026 - HTML Puro</footer>
+<footer>© 2026 • FNF Ultimate Toolkit</footer>
 
 <script>
-/* ===================== INTRO (SEU) ===================== */
 function enterSite(){
-  document.getElementById('introScreen').style.opacity=0;
-  setTimeout(()=>document.getElementById('introScreen').style.display='none',600);
+ document.getElementById('introScreen').style.display='none';
 }
 
-/* ===================== GERADOR (CORRIGIDO + EXPANDIDO) ===================== */
+/* ===== GERADOR ===== */
 function generate(){
-  const engine=document.getElementById('engine').value;
-  const type=document.getElementById('scriptType').value;
-  let code="";
+ const engine=document.getElementById("engine").value;
+ const type=document.getElementById("scriptType").value;
+ let code="";
 
-  if(engine.includes("Psych")){
-    if(type==="Camera Zoom"){
-      code=`function onBeatHit()
- if curBeat % 4 == 0 then
-  cameraShake('camGame',0.02,0.2)
- end
-end`;
-    }
-    if(type==="HUD Custom"){
-      code=`function onCreatePost()
- setTextSize('scoreTxt',22)
- setTextColor('scoreTxt','00EAFF')
-end`;
-    }
-    if(type==="Note Special"){
-      code=`function opponentNoteHit()
- setProperty('health',getProperty('health')-0.02)
-end`;
-    }
-    if(type==="Health System"){
-      code=`function onUpdate()
- if getProperty('health') < 0.4 then
-  setProperty('health',0.4)
- end
-end`;
-    }
-    if(type==="Stage JSON"){
-      code=`{
- "defaultZoom":0.9,
- "boyfriend":[770,450],
- "girlfriend":[400,130],
- "opponent":[100,450]
-}`;
-    }
-  }
-
-  if(engine.includes("Codename")){
-    code=`// Codename Engine (HScript)
-function onBeatHit(beat){
- if(beat % 4 == 0){
-  Camera.shake(0.02);
+ if(engine.includes("Psych")){
+  if(type==="Camera Zoom") code=`function onBeatHit()\n cameraShake('camGame',0.02,0.2)\nend`;
+  if(type==="Camera Follow") code=`function onUpdate()\n triggerEvent('Camera Follow Pos',xx,yy)\nend`;
+  if(type==="Custom Event") code=`function onEvent(n,v1,v2)\n if n=='MyEvent' then debugPrint(v1) end\nend`;
+  if(type==="Note Splash Toggle") code=`function onCreate()\n setPropertyFromClass('ClientPrefs','noteSplashes',false)\nend`;
+  if(type==="Middle Scroll Toggle") code=`function onCreatePost()\n setPropertyFromClass('ClientPrefs','middleScroll',true)\nend`;
+  if(type==="Beat Animation") code=`function onBeatHit()\n characterPlayAnim('boyfriend','hey',true)\nend`;
  }
-}`;
-  }
 
-  if(engine.includes("V-Slice")){
-    code=`class StageExample extends Stage {
- override function create() {
-  camera.zoom = 0.9;
+ if(engine.includes("V-Slice")){
+  if(type.includes("HUD")) code=`class HUD extends flixel.FlxState{override function create(){trace("HUD");}}`;
+  if(type.includes("Note Modifier")) code=`override function update(elapsed){notes.forEach(n->n.alpha=0.5);}`;
+  if(type.includes("Camera")) code=`FlxG.camera.zoom+=0.01;`;
+  if(type.includes("Character")) code=`dad.playAnim("singLEFT",true);`;
+  if(type.includes("Health")) code=`health-=0.01;`;
  }
-}`;
-  }
 
-  document.getElementById('output').value=code;
+ document.getElementById("output").value=code;
 }
 
-/* ===================== CONVERTER MELHORADO ===================== */
-function convert(){
-  const t=document.getElementById('convertType').value;
-  let txt=document.getElementById('inputScript').value;
-
-  if(!txt.trim()){
-    alert("Cole um script primeiro");
-    return;
-  }
-
-  if(t.includes("Psych")){
-    txt="// Converted Psych → Codename\n"+txt
-      .replace("cameraShake","Camera.shake");
-  }else{
-    txt="-- Converted Codename → Psych\n"+txt
-      .replace("Camera.shake","cameraShake");
-  }
-
-  document.getElementById('converted').value=txt;
-}
-
-/* ===================== ADICIONADO: UTILIDADES ===================== */
-function copyOut(){
-  const o=document.getElementById('output');
-  o.select();
-  document.execCommand("copy");
-}
-
+function copyOut(){output.select();document.execCommand("copy");}
 function downloadOut(){
-  const t=document.getElementById('output').value;
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(new Blob([t]));
-  a.download="fnf_script.txt";
-  a.click();
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(new Blob([output.value]));
+ a.download="fnf_script.txt";
+ a.click();
 }
 
-function importFile(){
-  const f=document.getElementById('importFile').files[0];
-  if(!f) return;
-  const r=new FileReader();
-  r.onload=()=>document.getElementById('output').value=r.result;
-  r.readAsText(f);
+/* ===== CHART ===== */
+let chartResult="";
+chartInput.onchange=e=>{
+ const r=new FileReader();
+ r.onload=ev=>{
+  const data=JSON.parse(ev.target.result);
+  const out={version:"2.0.0",scrollSpeed:{hard:1},events:[],notes:{hard:[]}};
+  (data.song?.notes||[]).forEach(s=>{
+   (s.sectionNotes||[]).forEach(n=>{
+    out.notes.hard.push({t:n[0],d:n[1],l:n[2]||0});
+   });
+  });
+  chartResult=JSON.stringify(out,null,2);
+  chartOutput.textContent=chartResult;
+ };
+ r.readAsText(e.target.files[0]);
+};
+
+function downloadChart(){
+ if(!chartResult)return;
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(new Blob([chartResult]));
+ a.download="vslice-chart.json";
+ a.click();
+}
+
+/* ===== STAGE ===== */
+let stageJSON=null,stageLUA=null;
+stageJson.onchange=e=>{const r=new FileReader();r.onload=x=>stageJSON=JSON.parse(x.target.result);r.readAsText(e.target.files[0]);}
+stageLua.onchange=e=>{const r=new FileReader();r.onload=x=>stageLUA=x.target.result;r.readAsText(e.target.files[0]);}
+
+function convertStage(){
+ if(!stageJSON||!stageLUA)return alert("Envie JSON e LUA");
+ const out={version:"1.0.0",cameraZoom:stageJSON.defaultZoom||0.9,props:[]};
+ stageOutput.textContent=JSON.stringify(out,null,2);
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)]));
+ a.download="vslice-stage.json";
+ a.click();
 }
 </script>
 
