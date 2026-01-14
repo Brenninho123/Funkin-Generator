@@ -1,18 +1,19 @@
 {
   "name": "fnf-ultimate-toolkit",
   "version": "1.0.0",
-  "description": "Friday Night Funkin' Ultimate Toolkit",
+  "description": "FNF Ultimate Toolkit - Electron App",
   "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "dist-win": "electron-builder --win --x64 --ia32",
-    "dist-all": "electron-builder"
-  },
   "author": "Seu Nome",
   "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist-win": "electron-builder --win nsis --publish never",
+    "dist-linux": "electron-builder --linux AppImage --publish never",
+    "dist-all": "electron-builder --win nsis --linux AppImage --publish never"
+  },
   "devDependencies": {
     "electron": "^26.0.0",
-    "electron-builder": "^24.6.0"
+    "electron-builder": "^24.0.0"
   },
   "build": {
     "appId": "com.seunome.fnfultimatetoolkit",
@@ -20,18 +21,18 @@
     "directories": {
       "output": "dist"
     },
-    "files": [
-      "**/*"
-    ],
     "win": {
       "target": [
-        "nsis",
-        "zip"
-      ]
+        "nsis"
+      ],
+      "icon": "build/icon.ico"
     },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Utility",
+      "icon": "build/icon.png"
     }
   }
 }
